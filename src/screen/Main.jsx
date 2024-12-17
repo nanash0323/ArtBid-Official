@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row';
 
 function Main() {
   return (
-    <Row xs={1} md={2} className="g-4 bg-black">
+    <Row xs={1} md={6 } className="g-4 bg-black">
       {Array.from({ length: 4 }).map((_, idx) => (
         <Col key={idx}>
           <Card>
