@@ -1,3 +1,4 @@
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -12,43 +13,38 @@ function Header() {
   // Function to check if the token is expired
   function isTokenExpired(token) {
     try {
-      // Assuming token is a JWT token, split and decode the payload
       const decoded = JSON.parse(atob(token.split('.')[1])); // Decode the JWT payload
       return decoded.exp * 1000 < Date.now(); // Return true if the token has expired
     } catch (e) {
-      return true; // If decoding fails or token structure is invalid, treat it as expired
+      return true; // If decoding fails, treat it as expired
     }
   }
 
-  // Get the token from localStorage
+  // Retrieve token from localStorage
   const token = localStorage.getItem('authToken');
-
-  // Check if the token exists and if it's expired
-  const isAuthenticated = token && !isTokenExpired(token);
+  const isAuthenticated = token && !isTokenExpired(token); // Check if token is valid
 
   const handleLogout = () => {
     try {
-      // Remove token from localStorage on logout
-      localStorage.removeItem('authToken');
-      console.log('Token removed from localStorage');
+      localStorage.removeItem('authToken'); // Remove token on logout
+      console.log('User logged out successfully');
     } catch (error) {
-      console.error('Error removing token from localStorage', error);
+      console.error('Error during logout', error);
     }
-
-    // Redirect to the login page after logging out
-    navigate('/login');
+    navigate('/login'); // Redirect to login page
   };
 
-  // If the token is expired or missing, automatically log the user out
+  // Automatically log out if token is expired
   if (!isAuthenticated && token) {
-    // Token is expired or missing, so log the user out
     handleLogout();
   }
 
   return (
     <Navbar expand="lg" className="bg-black">
       <Container fluid>
-        <Navbar.Brand href="#" style={{ color: 'white' }}>PinoyFlix</Navbar.Brand>
+        <Navbar.Brand as={NavLink} to="/" style={{ color: 'white' }}>
+          PinoyFlix
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -56,13 +52,19 @@ function Header() {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link as={NavLink} to="/" style={{ color: 'white' }}>Home</Nav.Link>
-            <Nav.Link as={NavLink} to="/profile" style={{ color: 'white' }}>Profile</Nav.Link>
+            <Nav.Link as={NavLink} to="/" style={{ color: 'white' }}>
+              Home
+            </Nav.Link>
+            <Nav.Link as={NavLink} to="/profile" style={{ color: 'white' }}>
+              Profile
+            </Nav.Link>
             <NavDropdown
               title={<span style={{ color: 'white' }}>Inventory</span>}
               id="navbarScrollingDropdown"
             >
-              <NavDropdown.Item href="#action3" style={{ color: 'white' }}>Action</NavDropdown.Item>
+              <NavDropdown.Item href="#action3" style={{ color: 'white' }}>
+                Action
+              </NavDropdown.Item>
               <NavDropdown.Item href="#action4" style={{ color: 'white' }}>
                 Another action
               </NavDropdown.Item>
@@ -72,7 +74,7 @@ function Header() {
               </NavDropdown.Item>
             </NavDropdown>
 
-            {/* Conditionally render the Sign Up and Logout links */}
+            {/* Conditional Rendering for Authentication */}
             {!isAuthenticated ? (
               <>
                 <Nav.Link as={NavLink} to="/signup" style={{ color: 'white' }}>
@@ -89,22 +91,20 @@ function Header() {
             )}
           </Nav>
 
-          <Form className="d-flex bg-black" style={{ border: '1px solid black' }}>
+          {/* Search Bar */}
+          <Form className="d-flex">
             <Form.Control
               type="search"
               placeholder="Search"
               className="me-2"
               aria-label="Search"
-              style={{ border: '1px solid black' }}
             />
-            <Button variant="outline-success" style={{ color: 'white', border: '1px solid black' }}>
-              Search
-            </Button>
+            <Button variant="outline-light">Search</Button>
           </Form>
         </Navbar.Collapse>
       </Container>
     </Navbar>
   );
 }
-//hatodg
+
 export default Header;

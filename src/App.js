@@ -5,6 +5,9 @@ import Footer from './components/Footer';
 import Main from './screen/Main';
 import Login from './screen/Login';
 import SignUp from './screen/SignUp';  // Add the SignUp import
+import Profile from './components/Profile/Profile'; // Import the Profile component
+
+
 
 function App() {
   return (
@@ -14,7 +17,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />  {/* Add the SignUp route */}
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/profile" element={<Profile />} /> {/* Add the Profile route */}
         </Routes>
         <Footer />
       </div>
